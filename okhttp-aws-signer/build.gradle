@@ -2,6 +2,7 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.adarshr.test-logger'
 apply from: "$rootProject.projectDir/maven-jar.gradle"
 apply from: "$rootProject.projectDir/libraries.gradle"
 
@@ -41,8 +42,16 @@ jacocoTestReport {
     }
 }
 
-test {
-    afterTest { desc, result ->
-        logger.quiet "Executing test ${desc.name}: ${result.resultType}"
-    }
+testlogger {
+    theme 'mocha'
+    showExceptions true
+    slowThreshold 2000
+    showSummary true
+    showPassed true
+    showSkipped true
+    showFailed true
+    showStandardStreams false
+    showPassedStandardStreams true
+    showSkippedStandardStreams true
+    showFailedStandardStreams true
 }

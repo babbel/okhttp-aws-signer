@@ -6,7 +6,7 @@ import okhttp3.Request
 inline fun request(creator: Request.Builder.() -> Unit): Request {
     val builder = Request.Builder()
     builder.creator()
-    return builder.build()!!
+    return builder.build()
 }
 
 var Request.Builder.url: String

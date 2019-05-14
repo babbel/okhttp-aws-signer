@@ -11,7 +11,7 @@ def libraries = project.ext.libraries = new Libraries()
 libraries {
     kotlin_std_lib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    okhttp = 'com.squareup.okhttp3:okhttp:3.11.0'
+    okhttp = 'com.squareup.okhttp3:okhttp:3.14.1'
 
     // For testing
     junit = 'junit:junit:4.12'
