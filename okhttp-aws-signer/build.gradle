@@ -21,8 +21,6 @@ dependencies {
     implementation libraries.okhttp
 
     testImplementation libraries.junit
-    testImplementation libraries.mockito
-    testImplementation libraries.mockito_kotlin
     testImplementation libraries.assertj
 }
 
