@@ -70,7 +70,7 @@ private fun Request.canonicalUri() =
 
 private fun Request.canonicalQueryString() =
     url().queryParameterNames().sorted()
-        .takeIf { !it.isEmpty() }
+        .takeIf { it.isNotEmpty() }
         ?.flatMap { name ->
             url().queryParameterValues(name).sorted()
                 .map { value ->

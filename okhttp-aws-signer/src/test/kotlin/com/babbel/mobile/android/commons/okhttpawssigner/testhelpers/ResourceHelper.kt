@@ -8,9 +8,11 @@ import okio.Okio
  * This method throws if string is not found
  */
 fun String.lineStartingWith(start: String) =
-    split("\n").find { it.startsWith(start) }?.let {
-        it.removePrefix("Authorization:").trim()
-    } ?: throw NoSuchElementException("Cannot find line starting with $start")
+    split("\n")
+        .find { it.startsWith(start) }
+        ?.removePrefix("Authorization:")
+        ?.trim()
+        ?: throw NoSuchElementException("Cannot find line starting with $start")
 
 object ResourceHelper {
     fun readResource(fileName: String) =

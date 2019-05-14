@@ -1,7 +1,6 @@
 package com.babbel.mobile.android.commons.okhttpawssigner.signing
 
 import com.babbel.mobile.android.commons.okhttpawssigner.OkHttpAwsV4Signer
-import com.babbel.mobile.android.commons.okhttpawssigner.internal.stringToSign
 import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.*
 import org.assertj.core.api.Assertions
 import org.junit.Test
