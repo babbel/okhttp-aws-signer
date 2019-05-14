@@ -40,3 +40,9 @@ jacocoTestReport {
         html.destination file("${buildDir}/reports/coverage/html")
     }
 }
+
+test {
+    afterTest { desc, result ->
+        logger.quiet "Executing test ${desc.name}: ${result.resultType}"
+    }
+}
