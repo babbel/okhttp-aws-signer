@@ -7,7 +7,7 @@ apply from: "$rootProject.projectDir/maven-jar.gradle"
 apply from: "$rootProject.projectDir/libraries.gradle"
 apply from: "$rootProject.projectDir/gradle/publish_github.gradle"
 
-version '1.0'
+version = LIBRARY_VERSION
 
 jar {
     manifest {
