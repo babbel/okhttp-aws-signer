@@ -5,8 +5,9 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'com.adarshr.test-logger'
 apply from: "$rootProject.projectDir/maven-jar.gradle"
 apply from: "$rootProject.projectDir/libraries.gradle"
+apply from: "$rootProject.projectDir/gradle/publish_github.gradle"
 
-version '1.0'
+version = LIBRARY_VERSION
 
 jar {
     manifest {
@@ -22,6 +23,24 @@ dependencies {
 
     testImplementation libraries.junit
     testImplementation libraries.assertj
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/lessonnine/commons.android")
+            credentials {
+                username = project.findProperty("GPR_USER") ?: System.getenv("USERNAME")
+                password = project.findProperty("GPR_KEY") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        bar(MavenPublication) {
+            from(components.java)
+        }
+    }
 }
 
 sourceSets {

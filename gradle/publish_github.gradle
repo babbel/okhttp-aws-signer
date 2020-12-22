@@ -1,0 +1,77 @@
+apply plugin: 'maven-publish'
+
+afterEvaluate { project ->
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = getRepositoryUrl()
+                credentials {
+                    username = project.findProperty("GPR_USER") ?: System.getenv("USERNAME")
+                    password = project.findProperty("GPR_KEY") ?: System.getenv("TOKEN")
+                }
+            }
+        }
+        publications {
+            gpr(MavenPublication) {
+                artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
+
+                groupId getLibraryGroup()
+                version getLibraryVersion()
+                artifactId getArtifactId()
+
+                configurePom(pom)
+            }
+        }
+    }
+}
+
+static def getRepositoryUrl() {
+    return "https://maven.pkg.github.com/lessonnine/commons.android"
+}
+
+def getLibraryGroup() {
+    return LIBRARY_GROUP ?: project.group
+}
+
+def getLibraryVersion() {
+    return LIBRARY_VERSION ?: "1"
+}
+
+def getArtifactId() {
+    return LIBRARY_ARTIFACT ?: project.name
+}
+
+def configurePom(pom) {
+    pom.withXml {
+        final dependenciesNode = asNode().appendNode('dependencies')
+        ext.addDependency = { Dependency dep, String scope ->
+            if (dep.group == null || dep.version == null || dep.name == null || dep.name == "unspecified")
+                return
+
+            final dependencyNode = dependenciesNode.appendNode('dependency')
+            dependencyNode.appendNode('groupId', dep.group)
+            dependencyNode.appendNode('artifactId', dep.name)
+            dependencyNode.appendNode('version', dep.version)
+            dependencyNode.appendNode('scope', scope)
+
+            if (!dep.transitive) {
+                final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                exclusionNode.appendNode('groupId', '*')
+                exclusionNode.appendNode('artifactId', '*')
+            } else if (!dep.properties.excludeRules.empty) {
+                final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+
+                dep.properties.excludeRules.each { ExcludeRule rule ->
+                    exclusionNode.appendNode('groupId', rule.group ?: '*')
+                    exclusionNode.appendNode('artifactId', rule.module ?: '*')
+                }
+            }
+
+        }
+
+        configurations.compile.getDependencies().each { dep -> addDependency(dep, "compile") }
+        configurations.api.getDependencies().each { dep -> addDependency(dep, "compile") }
+        configurations.implementation.getDependencies().each { dep -> addDependency(dep, "runtime") }
+    }
+}
