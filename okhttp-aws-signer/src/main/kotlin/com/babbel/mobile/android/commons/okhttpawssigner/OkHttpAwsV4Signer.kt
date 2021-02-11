@@ -21,7 +21,7 @@ class OkHttpAwsV4Signer(
         request: Request,
         accessKeyId: String?,
         accessKey: String?
-    ) =
+    ): Request =
         if (accessKey == null || accessKeyId == null)
             request
         else
