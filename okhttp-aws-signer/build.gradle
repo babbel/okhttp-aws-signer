@@ -29,7 +29,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/lessonnine/commons.android")
+            url = uri("https://maven.pkg.github.com/babbel/okhttp-aws-signer")
             credentials {
                 username = project.findProperty("GPR_USER") ?: System.getenv("USERNAME")
                 password = project.findProperty("GPR_KEY") ?: System.getenv("TOKEN")
