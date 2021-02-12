@@ -27,7 +27,7 @@ afterEvaluate { project ->
 }
 
 static def getRepositoryUrl() {
-    return "https://maven.pkg.github.com/lessonnine/commons.android"
+    return "https://maven.pkg.github.com/babbel/okhttp-aws-signer"
 }
 
 def getLibraryGroup() {
