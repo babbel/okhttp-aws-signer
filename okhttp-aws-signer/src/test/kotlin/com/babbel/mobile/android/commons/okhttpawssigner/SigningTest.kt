@@ -33,6 +33,27 @@ class SigningTest {
     }
 
     @Test
+    fun `signing request should only allow one Authorization header`() {
+        val request = request {
+            url = "http://example.amazonaws.com"
+
+            headers = mapOf(
+                "My-Header1" to "value4,value1,value3,value2",
+                "X-Amz-Date" to "20150830T123600Z"
+            )
+
+            get()
+        }
+
+        val signer = OkHttpAwsV4Signer("us-east-1", "service")
+        val result = signer.sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
+        val secondResult = signer.sign(result, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
+
+        assertThat(secondResult.headers().toString().lines().filter { it.startsWith("Authorization") }.size)
+            .isEqualTo(1)
+    }
+
+    @Test
     fun `signing request with headers that should not have multiple spaces`() {
         val request = request {
             url = "http://example.amazonaws.com"
@@ -206,7 +227,9 @@ class SigningTest {
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
         assertThat(result.headers()["Authorization"])
-            .isEqualTo(ResourceHelper.readResource("get-vanilla-empty-query-key.sreq").lineStartingWith("Authorization"))
+            .isEqualTo(
+                ResourceHelper.readResource("get-vanilla-empty-query-key.sreq").lineStartingWith("Authorization")
+            )
     }
 
     @Test
@@ -225,7 +248,9 @@ class SigningTest {
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
         assertThat(result.headers()["Authorization"])
-            .isEqualTo(ResourceHelper.readResource("get-vanilla-query-order-key-case.sreq").lineStartingWith("Authorization"))
+            .isEqualTo(
+                ResourceHelper.readResource("get-vanilla-query-order-key-case.sreq").lineStartingWith("Authorization")
+            )
     }
 
     @Test
@@ -243,7 +268,9 @@ class SigningTest {
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
         assertThat(result.headers()["Authorization"])
-            .isEqualTo(ResourceHelper.readResource("get-vanilla-query-order-key.sreq").lineStartingWith("Authorization"))
+            .isEqualTo(
+                ResourceHelper.readResource("get-vanilla-query-order-key.sreq").lineStartingWith("Authorization")
+            )
     }
 
     @Test
@@ -318,7 +345,9 @@ class SigningTest {
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
         assertThat(result.headers()["Authorization"])
-            .isEqualTo(ResourceHelper.readResource("post-vanilla-empty-query-value.sreq").lineStartingWith("Authorization"))
+            .isEqualTo(
+                ResourceHelper.readResource("post-vanilla-empty-query-value.sreq").lineStartingWith("Authorization")
+            )
     }
 
     @Test
