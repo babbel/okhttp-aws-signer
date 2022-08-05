@@ -13,7 +13,7 @@ internal const val SIGNING_ALGORITHM = "AWS4-HMAC-SHA256"
  */
 internal fun Request.signed(accessKeyId: String, accessKey: String, region: String, service: String) =
     newBuilder()
-        .addHeader("Authorization", awsAuthorizationHeader(accessKeyId, accessKey, region, service))
+        .header("Authorization", awsAuthorizationHeader(accessKeyId, accessKey, region, service))
         .build()
 
 internal fun Request.awsAuthorizationHeader(accesKeyId: String, accessKey: String, region: String, service: String) =

@@ -1,3 +1,4 @@
-task wrapper(type: Wrapper) {
+wrapper {
     gradleVersion = '6.8.2'
+    distributionUrl = distributionUrl.replace("bin", "all")
 }
