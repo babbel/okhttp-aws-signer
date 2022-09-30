@@ -1,20 +1,11 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'jacoco'
-apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'com.adarshr.test-logger'
-apply from: "$rootProject.projectDir/maven-jar.gradle"
 apply from: "$rootProject.projectDir/libraries.gradle"
 apply from: "$rootProject.projectDir/gradle/publish_github.gradle"
 
 version = LIBRARY_VERSION
-
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'OkHttp AWS V4 Signer',
-                'Implementation-Version': version
-    }
-}
 
 dependencies {
     implementation libraries.kotlin_std_lib
@@ -23,24 +14,6 @@ dependencies {
 
     testImplementation libraries.junit
     testImplementation libraries.assertj
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/babbel/okhttp-aws-signer")
-            credentials {
-                username = project.findProperty("GPR_USER") ?: System.getenv("USERNAME")
-                password = project.findProperty("GPR_KEY") ?: System.getenv("TOKEN")
-            }
-        }
-    }
-    publications {
-        bar(MavenPublication) {
-            from(components.java)
-        }
-    }
 }
 
 sourceSets {

@@ -14,7 +14,7 @@ afterEvaluate { project ->
         }
         publications {
             gpr(MavenPublication) {
-                artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
+                artifact("$buildDir/libs/${getArtifactId()}-${getLibraryVersion()}.jar")
 
                 groupId getLibraryGroup()
                 version getLibraryVersion()
@@ -67,10 +67,8 @@ def configurePom(pom) {
                     exclusionNode.appendNode('artifactId', rule.module ?: '*')
                 }
             }
-
         }
 
-        configurations.compile.getDependencies().each { dep -> addDependency(dep, "compile") }
         configurations.api.getDependencies().each { dep -> addDependency(dep, "compile") }
         configurations.implementation.getDependencies().each { dep -> addDependency(dep, "runtime") }
     }
