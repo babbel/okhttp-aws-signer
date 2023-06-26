@@ -5,8 +5,8 @@ import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.ResourceHel
 import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.headers
 import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.request
 import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.url
-import okhttp3.MediaType
-import okhttp3.RequestBody
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -282,8 +282,7 @@ class StringToSignTest {
             headers = mapOf(
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/json"), ""))
+            post("".toRequestBody("application/json".toMediaType()))
         }
 
         val result = request.stringToSign("us-east-1", "service")
@@ -300,8 +299,7 @@ class StringToSignTest {
                 "My-Header1" to "VALUE1",
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/json"), ""))
+            post("".toRequestBody("application/json".toMediaType()))
         }
 
         val result = request.stringToSign("us-east-1", "service")
@@ -318,8 +316,7 @@ class StringToSignTest {
                 "Content-Type" to "application/x-www-form-urlencoded",
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), "Param1=value1"))
+            post("Param1=value1".toRequestBody("application/x-www-form-urlencoded".toMediaType()))
         }
 
         val result = request.stringToSign("us-east-1", "service")
@@ -335,8 +332,7 @@ class StringToSignTest {
             headers = mapOf(
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/json"), ""))
+            post("".toRequestBody("application/json".toMediaType()))
         }
 
         val result = request.stringToSign("us-east-1", "service")
@@ -352,8 +348,7 @@ class StringToSignTest {
             headers = mapOf(
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/json"), ""))
+            post("".toRequestBody("application/json".toMediaType()))
         }
 
         val result = request.stringToSign("us-east-1", "service")

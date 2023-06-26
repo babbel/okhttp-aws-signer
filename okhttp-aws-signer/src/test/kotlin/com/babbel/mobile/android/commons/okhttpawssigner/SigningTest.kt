@@ -6,8 +6,8 @@ import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.headers
 import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.lineStartingWith
 import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.request
 import com.babbel.mobile.android.commons.okhttpawssigner.testhelpers.url
-import okhttp3.MediaType
-import okhttp3.RequestBody
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -28,7 +28,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-header-value-order.sreq").lineStartingWith("Authorization"))
     }
 
@@ -49,7 +49,7 @@ class SigningTest {
         val result = signer.sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
         val secondResult = signer.sign(result, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(secondResult.headers().toString().lines().filter { it.startsWith("Authorization") }.size)
+        assertThat(secondResult.headers.toString().lines().filter { it.startsWith("Authorization") }.size)
             .isEqualTo(1)
     }
 
@@ -70,7 +70,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-header-value-trim.sreq").lineStartingWith("Authorization"))
     }
 
@@ -91,7 +91,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-query-empty.sreq").lineStartingWith("Authorization"))
     }
 
@@ -112,7 +112,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-query-time-stamp.sreq").lineStartingWith("Authorization"))
     }
 
@@ -131,7 +131,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-slashes.sreq").lineStartingWith("Authorization"))
     }
 
@@ -150,7 +150,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-slash.sreq").lineStartingWith("Authorization"))
     }
 
@@ -169,7 +169,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-space.sreq").lineStartingWith("Authorization"))
     }
 
@@ -188,7 +188,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-unreserved.sreq").lineStartingWith("Authorization"))
     }
 
@@ -207,7 +207,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-utf8.sreq").lineStartingWith("Authorization"))
     }
 
@@ -226,7 +226,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(
                 ResourceHelper.readResource("get-vanilla-empty-query-key.sreq").lineStartingWith("Authorization")
             )
@@ -247,7 +247,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(
                 ResourceHelper.readResource("get-vanilla-query-order-key-case.sreq").lineStartingWith("Authorization")
             )
@@ -267,7 +267,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(
                 ResourceHelper.readResource("get-vanilla-query-order-key.sreq").lineStartingWith("Authorization")
             )
@@ -306,7 +306,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-vanilla-utf8-query.sreq").lineStartingWith("Authorization"))
     }
 
@@ -325,7 +325,7 @@ class SigningTest {
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("get-vanilla.sreq").lineStartingWith("Authorization"))
     }
 
@@ -337,14 +337,13 @@ class SigningTest {
             headers = mapOf(
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/json"), ""))
+            post("".toRequestBody("application/json".toMediaType()))
         }
 
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(
                 ResourceHelper.readResource("post-vanilla-empty-query-value.sreq").lineStartingWith("Authorization")
             )
@@ -358,14 +357,13 @@ class SigningTest {
             headers = mapOf(
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/json"), ""))
+            post("".toRequestBody("application/json".toMediaType()))
         }
 
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("post-header-key-case.sreq").lineStartingWith("Authorization"))
     }
 
@@ -378,14 +376,13 @@ class SigningTest {
                 "My-Header1" to "VALUE1",
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/json"), ""))
+            post("".toRequestBody("application/json".toMediaType()))
         }
 
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("post-header-value-case.sreq").lineStartingWith("Authorization"))
     }
 
@@ -398,14 +395,13 @@ class SigningTest {
                 "Content-Type" to "application/x-www-form-urlencoded",
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), "Param1=value1"))
+            post("Param1=value1".toRequestBody("application/x-www-form-urlencoded".toMediaType()))
         }
 
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("post-x-www-form-urlencoded.sreq").lineStartingWith("Authorization"))
     }
 
@@ -417,14 +413,13 @@ class SigningTest {
             headers = mapOf(
                 "X-Amz-Date" to "20150830T123600Z"
             )
-
-            post(RequestBody.create(MediaType.parse("application/json"), ""))
+            post("".toRequestBody("application/json".toMediaType()))
         }
 
         val result = OkHttpAwsV4Signer("us-east-1", "service")
             .sign(request, "AKIDEXAMPLE", "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY")
 
-        assertThat(result.headers()["Authorization"])
+        assertThat(result.headers["Authorization"])
             .isEqualTo(ResourceHelper.readResource("post-vanilla.sreq").lineStartingWith("Authorization"))
     }
 }

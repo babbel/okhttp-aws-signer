@@ -1,6 +1,7 @@
 package com.babbel.mobile.android.commons.okhttpawssigner.testhelpers
 
-import okio.Okio
+import okio.buffer
+import okio.source
 
 /**
  * Find the string starting with the given start.
@@ -16,7 +17,7 @@ fun String.lineStartingWith(start: String) =
 
 object ResourceHelper {
     fun readResource(fileName: String) =
-        Okio.buffer(Okio.source(javaClass.classLoader.getResourceAsStream(fileName)))
-            .readUtf8()!!
+        javaClass.classLoader.getResourceAsStream(fileName)!!.source().buffer()
+            .readUtf8()
 }
 
