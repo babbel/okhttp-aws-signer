@@ -56,7 +56,7 @@ internal fun Request.stringToSign(region: String, service: String) =
  */
 internal fun Request.canonicalRequest() =
     """
-    |${method()}
+    |$method
     |${canonicalUri()}
     |${canonicalQueryString()}
     |${canonicalHeaders()}
@@ -66,13 +66,15 @@ internal fun Request.canonicalRequest() =
     """.trimMargin("|")
 
 private fun Request.canonicalUri() =
-    url().encodedPath().replace(Regex("/+"), "/")
+    url.encodedPath.replace(Regex("/+"), "/")
 
 private fun Request.canonicalQueryString() =
-    url().queryParameterNames().sorted()
+    url.queryParameterNames.sorted()
         .takeIf { it.isNotEmpty() }
         ?.flatMap { name ->
-            url().queryParameterValues(name).sorted()
+            url.queryParameterValues(name)
+                .filterNotNull()
+                .sorted()
                 .map { value ->
                     Pair(name.rfc3986Encode(), value.rfc3986Encode())
                 }
@@ -82,16 +84,16 @@ private fun Request.canonicalQueryString() =
         }
         ?: ""
 
-private fun Request.canonicalHeaders() = headers().canonicalHeaders()
+private fun Request.canonicalHeaders() = headers.canonicalHeaders()
 
 private fun Request.signedHeaders() =
-    headers().names()
-        .map { it.trim().toLowerCase(Locale.ENGLISH) }
+    headers.names()
+        .map { it.trim().lowercase(Locale.ENGLISH) }
         .sorted()
         .joinToString(";")
 
 private fun Request.bodyDigest() =
-    hash(bodyAsString()).toLowerCase(Locale.ENGLISH)
+    hash(bodyAsString()).lowercase(Locale.ENGLISH)
 
 /**
  * Get the amazon header with date.
@@ -116,15 +118,15 @@ private fun Request.amazonDateHeaderShort() =
  * Returns empty string on empty body.
  */
 private fun Request.bodyAsString() =
-    body()?.let {
+    body?.let {
         val buffer = Buffer()
-        this.newBuilder().build().body()!!.writeTo(buffer)
+        this.newBuilder().build().body!!.writeTo(buffer)
         buffer.readUtf8()
     } ?: ""
 
 private fun Headers.canonicalHeaders() =
     names().joinToString("\n") {
-        "${it.toLowerCase(Locale.ENGLISH)}:${values(it).trimmedAndJoined()}"
+        "${it.lowercase(Locale.ENGLISH)}:${values(it).trimmedAndJoined()}"
     }
 
 /**

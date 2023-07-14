@@ -2,9 +2,10 @@
  
 Please keep the list sorted alphabetically by handle
  
-| Github ID | Name | Email |
-| --------- | ---- | ----- |
-| [@s-ka](https://github.com/s-ka) | Stefan Kainz | skainz@babbel.com |
+| Github ID                              | Name           | Email |
+|----------------------------------------|----------------| ----- |
+| [@s-ka](https://github.com/s-ka)       | Stefan Kainz   | skainz@babbel.com |
+| [@ihalitskyi_ext](https://github.com/IvanHalitskyi) | Ivan Halitskyi | ihalitskyi_ext@babbel.com |
  
 ## These are prior project maintainers
  
