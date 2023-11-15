@@ -3,6 +3,7 @@ package com.babbel.mobile.android.commons.okhttpawssigner.internal
 import okhttp3.Headers
 import okhttp3.Request
 import okio.Buffer
+import java.io.ByteArrayInputStream
 import java.net.URLEncoder
 import java.util.Locale
 
@@ -93,7 +94,7 @@ private fun Request.signedHeaders() =
         .joinToString(";")
 
 private fun Request.bodyDigest() =
-    hash(bodyAsString()).lowercase(Locale.ENGLISH)
+    hash(bodyAsInputStream()).lowercase(Locale.ENGLISH)
 
 /**
  * Get the amazon header with date.
@@ -124,6 +125,16 @@ private fun Request.bodyAsString() =
         buffer.readUtf8()
     } ?: ""
 
+/**
+ * Read the request body without changing the current one.
+ * Returns empty string on empty body.
+ */
+private fun Request.bodyAsInputStream() =
+    body?.let {
+        val buffer = Buffer()
+        this.newBuilder().build().body!!.writeTo(buffer)
+        buffer.inputStream()
+    } ?: ByteArrayInputStream("".toByteArray())
 private fun Headers.canonicalHeaders() =
     names().joinToString("\n") {
         "${it.lowercase(Locale.ENGLISH)}:${values(it).trimmedAndJoined()}"
