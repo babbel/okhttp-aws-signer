@@ -1,5 +1,6 @@
 package com.babbel.mobile.android.commons.okhttpawssigner.internal
 
+import okio.Buffer
 import java.io.InputStream
 import java.nio.charset.Charset
 import java.security.MessageDigest
@@ -16,9 +17,9 @@ internal fun hash(value: String): String {
     return digest.toHexString()
 }
 
-internal fun hash(inputStream: InputStream): String {
+internal fun hash(bytes: ByteArray): String {
     val md = MessageDigest.getInstance(HASHING_ALGORITHM)
-    val digest = md.digest(inputStream.readAllBytes())
+    val digest = md.digest(bytes)
     return digest.toHexString()
 }
 
