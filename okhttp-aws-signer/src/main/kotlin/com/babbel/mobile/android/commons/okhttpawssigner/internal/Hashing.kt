@@ -1,5 +1,7 @@
 package com.babbel.mobile.android.commons.okhttpawssigner.internal
 
+import okio.Buffer
+import java.io.InputStream
 import java.nio.charset.Charset
 import java.security.MessageDigest
 import javax.crypto.Mac
@@ -10,6 +12,12 @@ internal const val MAC_ALGORITHM = "HmacSHA256"
 
 internal fun hash(value: String): String {
     val bytes = value.toByteArray()
+    val md = MessageDigest.getInstance(HASHING_ALGORITHM)
+    val digest = md.digest(bytes)
+    return digest.toHexString()
+}
+
+internal fun hash(bytes: ByteArray): String {
     val md = MessageDigest.getInstance(HASHING_ALGORITHM)
     val digest = md.digest(bytes)
     return digest.toHexString()
