@@ -93,7 +93,7 @@ private fun Request.signedHeaders() =
         .joinToString(";")
 
 private fun Request.bodyDigest() =
-    hash(bodyAsString()).lowercase(Locale.ENGLISH)
+    hash(bodyAsByteArray()).lowercase(Locale.ENGLISH)
 
 /**
  * Get the amazon header with date.
@@ -115,14 +115,13 @@ private fun Request.amazonDateHeaderShort() =
 
 /**
  * Read the request body without changing the current one.
- * Returns empty string on empty body.
  */
-private fun Request.bodyAsString() =
+private fun Request.bodyAsByteArray() =
     body?.let {
         val buffer = Buffer()
         this.newBuilder().build().body!!.writeTo(buffer)
-        buffer.readUtf8()
-    } ?: ""
+        buffer.readByteArray()
+    } ?: byteArrayOf()
 
 private fun Headers.canonicalHeaders() =
     names().joinToString("\n") {
