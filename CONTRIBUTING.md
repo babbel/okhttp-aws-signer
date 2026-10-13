@@ -6,7 +6,7 @@ email, or any other method with the owners of this repository before making a ch
 Please note we have a code of conduct, please follow it in all your interactions with the project.
  
  
-You can ping the OSS committee via @babbel/oss on github
+You can ping the maintainers via @babbel/infrastructure on github
  
 ## Pull Request Process
  
@@ -75,7 +75,7 @@ further defined and clarified by project maintainers.
 ### Enforcement
  
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team via issues, or pinging on Github through @babbel/babbel-oss. All
+reported by contacting the project team via issues, or pinging on Github through @babbel/infrastructure. All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
